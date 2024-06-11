@@ -125,12 +125,12 @@ var exponent = function(base, exp) {
   if (exp === 0){ // Numbers to the power of zero are equal to 1
     return 1;
   }
-  if (exp === -1){  
-    return 1 / base
+  if (exp === -1){  // Base case for negative exp
+    return (1 / base);
   } else if (exp < 0){
     return (1 /  base) * (exponent(base, exp + 1));
   }
-  return base * exponent(base, exp - 1)
+  return base * exponent(base, exp - 1);
 };
 
 // 8. Determine if a number is a power of two.
@@ -154,18 +154,46 @@ var powerOfTwo = function(n) {
   if (n === 1){ // Base case
     return true;
   }
-  if (n > 1 && n % 2 === 1){ // If a number can no longer be divided by 2 it is not a power of 2
-    return false;
-  }
   return powerOfTwo(n / 2); // Keep dividing a number by 2 until it not longer can be divided by 2, or n becomes 1
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+/*
+I: String
+O: String reversed
+C: n/a
+E: n/a
+*/
+var reverse = function(string) { 
+  if (string.length === 0){ // Base case
+    return ''; // Empty string
+  }
+  return string[string.length - 1] + reverse(string.slice(0, -1)) // Return lass character of string
+  // + recall function with last character removed
 };
 
 // 10. Write a function that determines if a string is a palindrome.
+/*
+I: String
+O: Boolean Value
+C: n/a
+E: n/a
+*/
 var palindrome = function(string) {
+  if (string.length <= 1){ // Base case
+    return true;
+  }
+  if (string[0] === ' '){ // Eliminate space
+    return palindrome(string.slice(1));
+  }
+  if (string[string.length - 1] === ' '){ // Eliminate space
+    return palindrome(string.slice(0, -1));
+  }
+  if (string[0].toUpperCase() === string[string.length - 1].toUpperCase()){
+    return palindrome(string.slice(1, -1)); // If the first and last character are the same
+  } else {                                // recall function with first and last characters removed
+    return false; // Return false if the first and last charactera are ever not the same
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -179,8 +207,25 @@ var modulo = function(x, y) {
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
+/*
+I: Two numbers
+O: The product of the numbers
+C: n/a
+E: n/a
+*/
 var multiply = function(x, y) {
+  if (y === 0){
+    return 0;
+  }
+  if (y > 0){
+    return x + multiply(x, y - 1);
+  }
+  if (y < 0){
+    return -multiply(x, -y);
+  }
 };
+
+
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
@@ -201,6 +246,15 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.length === 0 && str2.length === 0){
+    return true; // If both strings lengths are 0 then the strings were equal
+  }
+  // recursion
+  if (str1[0] === str2[0]){ // Compare first characters of each string
+    return compareStr(str1.slice(1), str2.slice(1)) // Recall function if they are equal
+  } else { 
+    return false; // False if characters are different 
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
