@@ -4,47 +4,160 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-var factorial = function(n) {
+/* 
+I: A number
+O: The factorial of that number
+C: n/a
+E:
+*/
+
+var factorial = function(n, product = 1) {
+  if (n < 0){ // Base case
+    return null;
+  }
+  if (n === 1 || n === 0){ // Base case
+    return product; 
+  }
+  // recursion
+  product *= n // product = product * n
+  return factorial(n - 1, product); // Recall factorial with n - 1
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
+/*
+I: An array of integers
+O: Sum of the elements of the integers
+C: n/a
+E: n/a
+ */
 var sum = function(array) {
+  if (array.length === 0){ // Base case
+    return 0 // Return 0 for sum() once array.length === 0
+  }
+  // recursion
+
+  return array[0] + sum(array.slice(1)) // Add array[0] and the value of recalling the function with the next index
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
 };
-
+/*
+I: A number
+O: A boolean value
+C: n/a
+E: n/a
+*/
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n < 0){ // convert negative number to positive
+    return isEven(n * -1); // Then restart the function call
+  }
+  if (n === 1){ // Base case
+  return false; // Return false once n === 1
+} else if (n === 0){ // Base case
+    return true; // Return true once n === 0 
+  }
+  return isEven(n - 2); // Restart function call with n - 2 as arguement
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
+/*
+I: Number
+O: Sum of all the numbers below <number>
+C: n/a
+E: Negative Numbers? 
+*/
 var sumBelow = function(n) {
+  if (n === 0){ // Base case
+    return 0 // return 0 when n = 0
+  } else if (n < 0){ // For negative numbers
+    return n + 1 + sumBelow(n + 1); // Add n + 1 to the value of calling sumBelow on the next highest integer
+  }
+  // recursion
+  return n - 1 + sumBelow(n - 1) // Add n - 1 to the value of calling sumBelow on the next lowest integer
 };
+
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
-};
+/*
+I: Two integers
+O: The range between the integers
+C: Return an array, accepts negative numbers, if starting integer is larger than ending
+E: If no numbers are in range? 
+*/
+var range = function(x, y, output=[]) {
+  if (x + 1 === y || x === y || x - 1 === y){ // For integers with no range between
+    return output
+  }
+  if (x < y){
+    output.push(x + 1);
+    return range(x + 1, y, output);
+  }
+  if (x > y){
+    output.push(x - 1);
+      return range(x - 1, y, output);
+    }
+  }
+
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+/* 
+I: Base number and exponent number
+O: Number
+C: Return 1 if exp is 0
+E: Should accept negative exponenets
+*/
+
 var exponent = function(base, exp) {
+  if (exp === 1){ // Base case for positive exp
+    return base;
+  }
+  if (exp === 0){ // Numbers to the power of zero are equal to 1
+    return 1;
+  }
+  if (exp === -1){  
+    return 1 / base
+  } else if (exp < 0){
+    return (1 /  base) * (exponent(base, exp + 1));
+  }
+  return base * exponent(base, exp - 1)
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
+/* 
+I: Number
+O: Boolean valie
+C: n/a
+E: n/a
+*/
+// The powers of a number are those that can be the result of raising that number to a power
+// Test if a n is a power of two by continuously dividing n by 2
+// If n becomes 1 then n is a power of 2 
+// If at any point n % 2 === 1 then n is not a power of 2
 var powerOfTwo = function(n) {
+  if (n < 1){ // Numbers less than 1 cannot be powers of 2
+    return false;
+  }
+  if (n === 1){ // Base case
+    return true;
+  }
+  if (n > 1 && n % 2 === 1){ // If a number can no longer be divided by 2 it is not a power of 2
+    return false;
+  }
+  return powerOfTwo(n / 2); // Keep dividing a number by 2 until it not longer can be divided by 2, or n becomes 1
 };
 
 // 9. Write a function that accepts a string a reverses it.
